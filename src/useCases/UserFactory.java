@@ -1,14 +1,17 @@
 package useCases;
 import entities.RegisteredUser;
-import useCases.Repository.repository;
-import jdk.jfr.Registered;
 
 
 public class UserFactory {
-        Repository.re
 
-    public void createAccount(String username, String password){
+
+    public RegisteredUser createAccount(String username, String password){
         RegisteredUser user = new RegisteredUser(username, password);
-        Repository
+        return user;
+        //code to add the user to the repository
+        //
+        //
+
     }
+
 }
