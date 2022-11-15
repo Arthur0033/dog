@@ -2,40 +2,43 @@ package useCases;
 import entities.RegisteredUser;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class UserChecker {
-    private String username;
-    private String password;
-    private String passwordShadow;
 
-    public UserChecker(String id, String p1, String p2){
-        this.username = id;
-        this.password = p1;
-        this.passwordShadow = p2;
-    }
-    public String getUsername(){
-        return this.username;
+    private UserChecker(){
+
     }
 
-    public String getPassword(){
-        return this.password;
-    }
-
-    public String getPasswordShadow(){
-        return this.passwordShadow;
-    }
-
-    public boolean checkUserTaken(ArrayList<RegisteredUser> repo){
-        for (RegisteredUser user : repo){
-            if (user.getUsername().equals(this.username)){
+    public static boolean checkUserTaken(UserInputData userInput){
+        ArrayList<RegisteredUser> allUsers = InMemoryUserRepository.findAllUsers();
+        for (RegisteredUser user : allUsers){
+            if (user.getUsername().equals(userInput.getUsername())){
                 return true;
             }
 
         }
         return false;
     }
-    public boolean checkPasswordMatch(String password1, String password2){
+    public static boolean checkPasswordMatch(String password1, String password2){
         return password1.equals(password2);
+    }
+    public static boolean checkNullEntries(UserInputData userInput){
+        if (userInput.getUsername() == null){
+            return false;
+        } else if (userInput.getPassword() == null) {
+            return false;
+
+        } else if (userInput.getPasswordShadow() == null) {
+            return false;
+
+
+        } else if (userInput.getFirstName() == null) {
+            return false;
+
+        } else if (userInput.getLastName() == null) {
+            return false;
+        } else return userInput.getEmail() != null;
     }
 
 

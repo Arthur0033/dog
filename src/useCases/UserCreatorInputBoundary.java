@@ -7,10 +7,7 @@ import java.util.ArrayList;
 
 public interface UserCreatorInputBoundary {
 
-    /**
-    the abstract method for user factory which will create
-     */
-    UserManager create(UserInputData input, ArrayList<RegisteredUser> repo);
+    boolean create(UserInputData input);
 
 
 }

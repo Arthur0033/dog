@@ -22,10 +22,13 @@ public class AccountController {
         this.data = data;
 
     }
-    UserInputData create(String username, String password, String passwordShadow){
-        UserInputData userShell = new UserInputData(username, password, passwordShadow);
 
-        return userShell;
+    UserInputData create(String username, String password, String passwordShadow,
+                         String firstName, String lastName, String email){
+        UserInputData userInput = new UserInputData(username, password,
+                passwordShadow, firstName, lastName, email);
+
+        return userInput;
     }
 
 

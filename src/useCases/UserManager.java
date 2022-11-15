@@ -2,6 +2,7 @@ package useCases;
 
 import entities.RegisteredUser;
 import jdk.jfr.Registered;
+import useCases.UserChecker.*;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,10 @@ public class UserManager implements UserCreatorInputBoundary{
     private String username;
     private String password;
     private String passwordShadow;
+    private String firstName;
+    private String lastName;
+    private String email;
+
     //public ArrayList<RegisteredUser> repo = new ArrayList<entities.RegisteredUser>();
 
 
@@ -24,57 +29,59 @@ public class UserManager implements UserCreatorInputBoundary{
         return this.passwordShadow;
     }
 
-    public UserManager (String username, String password, String passwordShadow){
+    public UserManager (String username, String password, String passwordShadow, String first,
+                        String last, String email){
         this.username = username;
         this.password = password;
         this.passwordShadow = passwordShadow;
+        this.firstName = first;
+        this.lastName = last;
+        this.email = email;
 
     }
-
-    public UserManager (String username, String password){
+    public UserManager (String username, String password, String first,
+                        String last, String email){
         this.username = username;
         this.password = password;
+        this.firstName = first;
+        this.lastName = last;
+        this.email = email;
+
     }
 
+
+
     @Override
-    public UserManager create(UserInputData input, ArrayList<RegisteredUser> repo) {
+    public boolean create(UserInputData input) {
         String id = input.getUsername();
         String password = input.getPassword();
+        String passwordShadow = input.getPasswordShadow();
+        String email = input.getEmail();
+        String firstName = input.getFirstName();
+        String lastName = input.getLastName();
 
 
         //if code works fix the password parameter
-        if ((!(input.checkUserTaken(repo))) && ((input.checkPasswordMatch(input.getPassword(),
-                input.getPasswordShadow())))){
+        if (UserChecker.checkUserTaken(input)){
+            return false;
 
-            UserFactory user = new UserFactory();
-            RegisteredUser account = user.createAccount(id, password);
 
-            UserManager doger = new UserManager(id, password);
+        } else if (!(UserChecker.checkNullEntries(input))) {
+            return false;
 
-            return doger;
-        }else {
-            return null;
+        } else if (!(UserChecker.checkPasswordMatch(password, passwordShadow))) {
+            return false;
+
+
+        } else {
+
+            //creation of the account and added to the repository
+            UserFactory.createAccount(id, password, firstName, lastName, email);
+
+            return true;
         }
 
     }
 
-//    public RegisteredUser create(UserInputData input, ArrayList<RegisteredUser> repo) {
-//        String id = input.getUsername();
-//        String password = input.getPassword();
-//
-//
-//        //if code works fix the password parameter
-//        if ((!(input.checkUserTaken(repo))) && ((input.checkPasswordMatch(input.getPassword(),
-//                input.getPasswordShadow())))){
-//
-//            UserFactory user = new UserFactory();
-//            RegisteredUser account = user.createAccount(id, password);
-//
-//            return account;
-//        }else {
-//            return null;
-//        }
-//
-//    }
 
 }
