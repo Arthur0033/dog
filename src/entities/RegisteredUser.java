@@ -2,21 +2,44 @@ package entities;
 
 public class RegisteredUser extends User{
 
-    private String id;
+    private String username;
     private String password;
+    private String firstName;
+    private String lastName;
+    private String email;
 
 
-    public RegisteredUser(final String id, final String password) {
-        this.id = id;
-
+    public RegisteredUser(final String username, final String password,
+                          final String first, final String last, final String email) {
+        this.username = username;
         this.password = password;
+        this.firstName = first;
+        this.lastName = last;
+        this.email = email;
 
 
     }
     public String getUsername(){
-        return this.id;
+        return this.username;
     }
     public String getPassword(){
         return this.password;
     }
+    public String getFirstName(){
+        return this.firstName;
+    }
+    public String getLastName(){return this.lastName;}
+    public String getEmail(){
+        return this.email;
+    }
+
+
+    @Override
+    public String toString(){
+        return "User{Username = " + this.username + " | " + "Password = " +
+                this.password + " | " + "Email = " + this.email + " | " +
+                "First name = " + this.firstName +
+                " | " + "Last name = " + this.lastName + " | " + "}";
+    }
 }
+
